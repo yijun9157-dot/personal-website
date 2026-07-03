@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #0a0a0f;
-  --color-surface: #14141f;
-  --color-surface-hover: #1e1e2e;
-  --color-accent: #7c3aed;
-  --color-accent-glow: #a78bfa;
-  --color-text: #e0e0e0;
-  --color-text-muted: #6b6b80;
-  --color-border: #2a2a3a;
+  --color-bg: #010a12;
+  --color-surface: #0a1c2e;
+  --color-surface-hover: #0f2a40;
+  --color-accent: #06b6d4;
+  --color-accent-glow: #22d3ee;
+  --color-gold: #c9a030;
+  --color-gold-light: #f0c040;
+  --color-coral: #f97316;
+  --color-text: #c8dce8;
+  --color-text-muted: #4d7a96;
+  --color-border: #14344a;
+  --color-gold-border: #3d2e0a;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -33,5 +37,26 @@ body {
 
 ::selection {
   background: var(--color-accent);
-  color: #fff;
+  color: #010a12;
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes dividerScan {
+  0%, 100% { transform: translateY(-10px); opacity: 0; }
+  50% { transform: translateY(10px); opacity: 0.6; }
+}
+
+@keyframes lightRays {
+  0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.6; transform: scale(1.05) rotate(1deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }

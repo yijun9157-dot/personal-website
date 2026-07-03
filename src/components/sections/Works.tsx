@@ -9,7 +9,6 @@ import WorkCard from "@/components/ui/WorkCard";
 export default function Works() {
   const [active, setActive] = useState<Category>("全部");
   const reduce = useReducedMotion();
-
   const filtered = active === "全部" ? works : works.filter((w) => w.category === active);
 
   return (
@@ -20,33 +19,25 @@ export default function Works() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-center"
+          className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-center text-gold-light"
         >
-          作品展示
+          深海遗物
         </motion.h2>
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent mx-auto mb-4" />
         <p className="text-text-muted text-center mb-12 max-w-xl mx-auto">
-          精选 AIGC 创作作品
+          从深渊中打捞的 AIGC 瑰宝
         </p>
-
         <FilterBar active={active} onSelect={setActive} />
-
         {filtered.length === 0 ? (
           <div className="text-center py-20 text-text-muted">
-            <p className="text-lg mb-2">作品待填入</p>
-            <p className="text-sm">在 src/data/works.ts 中添加你的 AIGC 作品</p>
+            <p className="text-lg mb-2 text-gold-light">✦ 深渊空寂 ✦</p>
+            <p className="text-sm">在 src/data/works.ts 中投放你的深海遗物</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filtered.map((work, i) => (
-                <motion.div
-                  key={work.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                >
+                <motion.div key={work.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }}>
                   <WorkCard work={work} index={i} />
                 </motion.div>
               ))}

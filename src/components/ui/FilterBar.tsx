@@ -3,10 +3,7 @@
 import { motion } from "motion/react";
 import { categories, type Category } from "@/data/works";
 
-interface Props {
-  active: Category;
-  onSelect: (cat: Category) => void;
-}
+interface Props { active: Category; onSelect: (cat: Category) => void; }
 
 export default function FilterBar({ active, onSelect }: Props) {
   return (
@@ -16,10 +13,10 @@ export default function FilterBar({ active, onSelect }: Props) {
           key={cat}
           onClick={() => onSelect(cat)}
           whileTap={{ scale: 0.95 }}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+          className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
             active === cat
-              ? "bg-accent text-white shadow-[0_0_15px_rgba(124,58,237,0.4)]"
-              : "bg-surface hover:bg-surface-hover text-text-muted hover:text-text border border-border"
+              ? "bg-accent text-bg shadow-[0_0_18px_rgba(34,211,238,0.3)]"
+              : "bg-surface hover:bg-surface-hover text-text-muted hover:text-gold-light border border-border"
           }`}
         >
           {cat}

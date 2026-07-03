@@ -12,7 +12,8 @@ export default function ParticleBackground() {
     if (!ctx) return;
 
     let animId: number;
-    let particles: Particle[] = [];
+    const particles: Firefly[] = [];
+    const mouse = { x: -1000, y: -1000 };
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -21,67 +22,70 @@ export default function ParticleBackground() {
     resize();
     window.addEventListener("resize", resize);
 
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      alpha: number;
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+    window.addEventListener("mousemove", onMouseMove);
+
+    class Firefly {
+      x: number; y: number; vx: number; vy: number;
+      size: number; alpha: number; pulsePhase: number; pulseSpeed: number; glowColor: string;
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 0.5;
-        this.alpha = Math.random() * 0.4 + 0.1;
+        this.vx = (Math.random() - 0.5) * 0.12;
+        this.vy = (Math.random() - 0.5) * 0.12 - 0.04;
+        this.size = Math.random() * 2.2 + 0.6;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.006 + Math.random() * 0.018;
+        // Atlantis palette: teal, cyan, gold, coral
+        const colors = [
+          "6, 182, 212",   // cyan
+          "34, 211, 238",  // bright cyan
+          "45, 212, 191",  // teal
+          "240, 192, 64",  // gold
+          "249, 115, 22",  // coral
+          "100, 200, 220", // pale cyan
+        ];
+        this.glowColor = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = 0;
       }
       update() {
-        this.x += this.vx;
+        this.pulsePhase += this.pulseSpeed;
+        this.alpha = 0.2 + Math.sin(this.pulsePhase) * 0.35;
+        this.x += this.vx + Math.sin(this.pulsePhase * 2) * 0.1;
         this.y += this.vy;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) { this.x -= (dx / dist) * 0.25; this.y -= (dy / dist) * 0.25; }
+        if (this.x < -20) this.x = canvas.width + 20;
+        if (this.x > canvas.width + 20) this.x = -20;
+        if (this.y < -20) this.y = canvas.height + 20;
+        if (this.y > canvas.height + 20) this.y = -20;
       }
       draw() {
         if (!ctx) return;
+        const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 8);
+        glow.addColorStop(0, `rgba(${this.glowColor}, ${this.alpha})`);
+        glow.addColorStop(0.3, `rgba(${this.glowColor}, ${this.alpha * 0.3})`);
+        glow.addColorStop(1, `rgba(${this.glowColor}, 0)`);
+        ctx.fillStyle = glow;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(124, 58, 237, ${this.alpha})`;
+        ctx.arc(this.x, this.y, this.size * 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 0.45, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha + 0.2})`;
         ctx.fill();
       }
     }
 
-    const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
-    for (let i = 0; i < count; i++) {
-      particles.push(new Particle());
-    }
-
-    function drawLines() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(124, 58, 237, ${0.08 * (1 - dist / 120)})`;
-            ctx.stroke();
-          }
-        }
-      }
-    }
+    for (let i = 0; i < 55; i++) particles.push(new Firefly());
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        p.update();
-        p.draw();
-      });
-      drawLines();
+      particles.forEach(p => { p.update(); p.draw(); });
       animId = requestAnimationFrame(animate);
     }
     animate();
@@ -89,14 +93,9 @@ export default function ParticleBackground() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      aria-hidden="true"
-    />
-  );
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" aria-hidden="true" />;
 }
