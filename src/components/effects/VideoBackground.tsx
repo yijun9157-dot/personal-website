@@ -103,7 +103,7 @@ export default function VideoBackground() {
       )}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(1,10,18,0.7) 100%)" }}
+        style={{ background: "radial-gradient(ellipse at center, transparent 15%, rgba(1,10,18,0.9) 100%)" }}
       />
     </div>
   );
