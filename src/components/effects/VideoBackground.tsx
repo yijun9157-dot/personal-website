@@ -38,9 +38,9 @@ function VideoLayers() {
 
   // 3 depth layers for parallax
   const layers = [
-    { z: -2.5, opacity: 0.08, scale: 1.12 },
-    { z: -1.2, opacity: 0.15, scale: 1.06 },
-    { z: 0,    opacity: 0.28, scale: 1.0 },
+    { z: -2.5, opacity: 0.15, scale: 1.12 },
+    { z: -1.2, opacity: 0.25, scale: 1.06 },
+    { z: 0,    opacity: 0.45, scale: 1.0 },
   ];
 
   useEffect(() => {
@@ -89,20 +89,21 @@ function VideoLayers() {
 
 export default function VideoBackground() {
   const reduce = useReducedMotion();
-  if (reduce) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
-      <Canvas
-        camera={{ position: [0, 0, 4], fov: 50, near: 0.5, far: 15 }}
-        dpr={[1, 1]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      >
-        <VideoLayers />
-      </Canvas>
+      {!reduce && (
+        <Canvas
+          camera={{ position: [0, 0, 4], fov: 50, near: 0.5, far: 15 }}
+          dpr={[1, 1]}
+          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        >
+          <VideoLayers />
+        </Canvas>
+      )}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center, transparent 15%, rgba(1,10,18,0.9) 100%)" }}
+        style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(1,10,18,0.7) 100%)" }}
       />
     </div>
   );
