@@ -11,6 +11,8 @@ export default function ParticleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let cw = canvas.width;
+    let ch = canvas.height;
     let animId: number;
     const particles: Firefly[] = [];
     const mouse = { x: -1000, y: -1000 };
@@ -18,6 +20,8 @@ export default function ParticleBackground() {
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      cw = canvas.width;
+      ch = canvas.height;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -32,21 +36,16 @@ export default function ParticleBackground() {
       x: number; y: number; vx: number; vy: number;
       size: number; alpha: number; pulsePhase: number; pulseSpeed: number; glowColor: string;
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * cw;
+        this.y = Math.random() * ch;
         this.vx = (Math.random() - 0.5) * 0.12;
         this.vy = (Math.random() - 0.5) * 0.12 - 0.04;
         this.size = Math.random() * 2.2 + 0.6;
         this.pulsePhase = Math.random() * Math.PI * 2;
         this.pulseSpeed = 0.006 + Math.random() * 0.018;
-        // Atlantis palette: teal, cyan, gold, coral
         const colors = [
-          "6, 182, 212",   // cyan
-          "34, 211, 238",  // bright cyan
-          "45, 212, 191",  // teal
-          "240, 192, 64",  // gold
-          "249, 115, 22",  // coral
-          "100, 200, 220", // pale cyan
+          "6, 182, 212", "34, 211, 238", "45, 212, 191",
+          "240, 192, 64", "249, 115, 22", "100, 200, 220",
         ];
         this.glowColor = colors[Math.floor(Math.random() * colors.length)];
         this.alpha = 0;
@@ -59,10 +58,10 @@ export default function ParticleBackground() {
         const dx = mouse.x - this.x, dy = mouse.y - this.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 100) { this.x -= (dx / dist) * 0.25; this.y -= (dy / dist) * 0.25; }
-        if (this.x < -20) this.x = canvas.width + 20;
-        if (this.x > canvas.width + 20) this.x = -20;
-        if (this.y < -20) this.y = canvas.height + 20;
-        if (this.y > canvas.height + 20) this.y = -20;
+        if (this.x < -20) this.x = cw + 20;
+        if (this.x > cw + 20) this.x = -20;
+        if (this.y < -20) this.y = ch + 20;
+        if (this.y > ch + 20) this.y = -20;
       }
       draw() {
         if (!ctx) return;
@@ -84,7 +83,8 @@ export default function ParticleBackground() {
     for (let i = 0; i < 55; i++) particles.push(new Firefly());
 
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (!ctx) return;
+      ctx.clearRect(0, 0, cw, ch);
       particles.forEach(p => { p.update(); p.draw(); });
       animId = requestAnimationFrame(animate);
     }
