@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 const links = [
-  { label: "遗物", href: "#works" },
-  { label: "航行", href: "#process" },
-  { label: "技艺", href: "#tech" },
-  { label: "信号", href: "#contact" },
+  { label: "作品", href: "#works" },
+  { label: "创作", href: "#process" },
+  { label: "引擎", href: "#tech" },
+  { label: "联系", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -24,7 +24,7 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-bg/90 backdrop-blur-xl border-b border-gold-border/20" : "bg-transparent"}`}>
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
         <a href="#" className="font-bold text-lg tracking-tight text-gold-light flex items-center gap-2">
-          <span className="text-accent-glow">◈</span> Atlantis
+          <span className="text-accent-glow">◈</span> Portal
         </a>
 
         <div className="hidden md:flex items-center gap-8">

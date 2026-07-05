@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, useState, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useReducedMotion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
@@ -16,7 +15,7 @@ function VideoLayers() {
 
   const [video] = useState(() => {
     const v = document.createElement("video");
-    v.src = "/ocean-bg.mp4";
+    v.src = "./ocean-bg.mp4";
     v.muted = true;
     v.playsInline = true;
     v.preload = "auto";
@@ -36,7 +35,6 @@ function VideoLayers() {
     return t;
   }, [video]);
 
-  // 3 depth layers for parallax
   const layers = [
     { z: -2.5, opacity: 0.15, scale: 1.12 },
     { z: -1.2, opacity: 0.25, scale: 1.06 },
@@ -88,19 +86,15 @@ function VideoLayers() {
 }
 
 export default function VideoBackground() {
-  const reduce = useReducedMotion();
-
   return (
     <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
-      {!reduce && (
-        <Canvas
-          camera={{ position: [0, 0, 4], fov: 50, near: 0.5, far: 15 }}
-          dpr={[1, 1]}
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        >
-          <VideoLayers />
-        </Canvas>
-      )}
+      <Canvas
+        camera={{ position: [0, 0, 4], fov: 50, near: 0.5, far: 15 }}
+        dpr={[1, 1]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      >
+        <VideoLayers />
+      </Canvas>
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse at center, transparent 15%, rgba(1,10,18,0.9) 100%)" }}

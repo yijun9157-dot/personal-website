@@ -21,17 +21,17 @@ export default function Works() {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-center text-gold-light"
         >
-          深海遗物
+          建造记录
         </motion.h2>
         <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent mx-auto mb-4" />
         <p className="text-text-muted text-center mb-12 max-w-xl mx-auto">
-          从深渊中打捞的 AIGC 瑰宝
+          每一次生成都是一次建造，每一帧都是编译的结果
         </p>
         <FilterBar active={active} onSelect={setActive} />
         {filtered.length === 0 ? (
           <div className="text-center py-20 text-text-muted">
-            <p className="text-lg mb-2 text-gold-light">✦ 深渊空寂 ✦</p>
-            <p className="text-sm">在 src/data/works.ts 中投放你的深海遗物</p>
+            <p className="text-lg mb-2 text-gold-light">✦ 待建造 ✦</p>
+            <p className="text-sm">在 src/data/works.ts 中添加你的项目</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

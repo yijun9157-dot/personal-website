@@ -4,8 +4,8 @@ import { motion, useReducedMotion } from "motion/react";
 
 const tools = [
   "ComfyUI", "Stable Diffusion", "Midjourney", "DALL-E",
-  "Runway", "Pika", "Suno AI", "Remotion", "Three.js",
-  "Next.js", "Python", "TypeScript", "React", "Tailwind CSS", "Figma",
+  "Runway", "Pika", "Kling", "Suno AI", "Remotion",
+  "Three.js", "Next.js", "Python", "TypeScript", "React", "Figma",
 ];
 
 export default function TechStack() {
@@ -21,11 +21,11 @@ export default function TechStack() {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-gold-light"
         >
-          远古技艺
+          创作引擎
         </motion.h2>
         <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold-light to-transparent mx-auto mb-4" />
         <p className="text-text-muted mb-16 max-w-xl mx-auto">
-          AI 工具 × 开发框架，失落文明的技术遗产
+          驱动每一次生成的技术栈，从视觉到声音，从二维到三维
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           {tools.map((tool, i) => (

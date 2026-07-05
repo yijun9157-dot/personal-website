@@ -8,10 +8,10 @@ import { useReducedMotion } from "motion/react";
 gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
-  { step: "01", title: "深渊凝视", desc: "潜入创意深海，捕捉灵感之光" },
-  { step: "02", title: "古语编织", desc: "以 Prompt 为咒语，唤醒 AI 的造物之力" },
-  { step: "03", title: "潮汐打磨", desc: "多轮迭代，潮水般反复冲刷，去芜存菁" },
-  { step: "04", title: "遗物浮现", desc: "后期精炼，珍宝从深渊升向海面" },
+  { step: "01", title: "构思", desc: "定义创作目标与视觉语言，搭建概念框架" },
+  { step: "02", title: "编译", desc: "设计 Prompt 与参数，启动 AI 生成流水线" },
+  { step: "03", title: "调校", desc: "多轮迭代反馈，筛选最优输出，校准细节" },
+  { step: "04", title: "交付", desc: "后期整合与精修，输出最终成果" },
 ];
 
 export default function Process() {
@@ -35,9 +35,9 @@ export default function Process() {
     <section id="process" ref={wrapRef} className="relative overflow-hidden">
       <div ref={trackRef} className="flex h-dvh items-center">
         <div className="flex-shrink-0 w-[40vw] min-w-[300px] flex flex-col justify-center px-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-2 text-gold-light">航行日志</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-2 text-gold-light">建造流程</h2>
           <div className="w-16 h-px bg-gradient-to-r from-gold-light to-transparent mb-4" />
-          <p className="text-text-muted text-lg">从深渊到海面</p>
+          <p className="text-text-muted text-lg">从构思到交付的完整路径</p>
         </div>
         {steps.map((s) => (
           <div key={s.step} className="flex-shrink-0 w-[60vw] md:w-[40vw] lg:w-[30vw] min-w-[280px] px-6">
